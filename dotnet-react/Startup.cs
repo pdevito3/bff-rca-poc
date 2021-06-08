@@ -7,6 +7,7 @@ namespace dotnet_react
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using SpaServices.SnowpackDevServer;
 
     public class Startup
     {
@@ -20,7 +21,6 @@ namespace dotnet_react
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllersWithViews();
 
             // In production, the React files will be served from this directory
@@ -57,13 +57,22 @@ namespace dotnet_react
                     pattern: "{controller}/{action=Index}/{id?}");
             });
 
+            //app.UseSpa(spa =>
+            //{
+            //    spa.Options.SourcePath = "ClientApp";
+
+            //    if (env.IsDevelopment())
+            //    {
+            //        spa.UseReactDevelopmentServer(npmScript: "start");
+            //    }
+            //});
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "ClientApp";
 
                 if (env.IsDevelopment())
                 {
-                    spa.UseReactDevelopmentServer(npmScript: "start");
+                    spa.UseSnowpackDevServer(npmScript: "start");
                 }
             });
         }
